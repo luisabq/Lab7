@@ -1,0 +1,10 @@
+﻿For this test, I sorted the same 10,000 unique integers (ranging from 1,000,000 to 1,000,000,000, generated using Random.org) using three different methods: a C++ native plugin with std::sort, a C# managed plugin DLL, and a MonoBehaviour script in Unity.
+
+
+The native plugin was the fastest at 0.309 ms, followed by the MonoBehaviour at 0.673 ms and the managed plugin at 0.719 ms. So C++ was about twice as fast, which was pretty much what I expected. Both C# methods had similar results, which makes sense since they use the same runtime and sorting method.
+
+
+At first, my native plugin was actually showing a much slower time of 187 ms. I realized this was because Unity was loading the library on the first call, so I added a warm-up call for all three methods before testing again.
+
+
+Overall, the difference was pretty small, and I don't think it would make much of a difference for a single call. However, in a larger project where multiple functions are running constantly, those small differences could add up. Native plugins also have some downsides since they're platform-specific. For example, I had to create a .bundle for macOS instead of a .dll, and they're generally more complicated to set up and debug compared to managed plugins.
